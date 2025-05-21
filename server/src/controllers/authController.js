@@ -16,7 +16,8 @@ authController.post('/login', async (req, res) => {
 
     try {
         const result = await authService.login(email, password);
-        console.log(result);
+        
+        res.cookie('auth', result.token)
         
     } catch (error) {
         res.status(400).json({ error: error.message }).end();
