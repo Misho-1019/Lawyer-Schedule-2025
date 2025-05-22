@@ -18,3 +18,11 @@ export const authMiddleware = async (req, res, next) => {
         return res.status(401).json({ message: 'Invalid token' })
     }
 }
+
+export const isAuth = (req, res, next) => {
+    if (!req.user) {
+        return res.status(401).json({ message: 'Unauthorized'})
+    }
+
+    next()
+}
