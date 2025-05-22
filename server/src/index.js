@@ -22,6 +22,7 @@ app.get('/', (req, res) => {
     res.send('It works!');
 })
 
+app.use(express.json())
 app.use(cookieParser())
 app.use(authMiddleware)
 
