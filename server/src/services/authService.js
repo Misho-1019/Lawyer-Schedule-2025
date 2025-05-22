@@ -6,6 +6,12 @@ const secret = process.env.SECRET || 'BASICSECRET';
 
 export default {
     async register(authData) {
+        const userCount = await User.countDocuments({ email: authData.email });
+
+        if (userCount > 0) {
+            throw new Error('User already exists!')
+        }
+
         return User.create(authData)
     },
     async login(email, password) {
