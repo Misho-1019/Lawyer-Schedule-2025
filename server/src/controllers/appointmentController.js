@@ -60,4 +60,20 @@ appointmentController.patch('/appointments/:appointmentId', isAuth, isAdmin, asy
     }
 })
 
+appointmentController.delete('/appointments/:appointmentId', isAuth, isAdmin, async (req, res) => {
+    const appointmentId = req.params.appointmentId;
+
+    try {
+        await appointmentService.delete(appointmentId)
+
+        res.status(200).json('Deleted successfully!')
+    } catch (err) {
+        if (err.message === 'Appointment not found!') {
+            return res.status(404).json({ message: err.message });
+        }
+        
+        res.status(500).json({ message: 'Failed to delete appointment!' })
+    }
+})
+
 export default appointmentController;
