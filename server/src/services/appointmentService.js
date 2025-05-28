@@ -13,4 +13,27 @@ export default {
             client: creatorId,
         })
     },
+    async update(appointmentId, updateData) {
+        const appointment = await Appointment.findById(appointmentId)
+
+        if (!appointment) {
+            throw new Error('Appointment not found!')
+        }
+
+        if (updateData.date !== undefined) {
+            appointment.date = updateData.date
+        }
+
+        if (updateData.time !== undefined) {
+            appointment.time = updateData.time
+        }
+
+        if (updateData.status !== undefined) {
+            appointment.status = updateData.status
+        }
+
+        const result = await appointment.save();
+
+        return result;
+    }
 }
