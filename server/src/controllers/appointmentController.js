@@ -41,4 +41,23 @@ appointmentController.get('/appointments/admin', isAuth, isAdmin, async (req, re
     }
 })
 
+appointmentController.patch('/appointments/:appointmentId', isAuth, isAdmin, async (req, res) => {
+    const appointmentId = req.params.appointmentId;
+    const { date, time, status } = req.body;
+
+    const validStatuses = ['pending', 'confirmed', 'completed'];
+    if (status && !validStatuses.includes(status)) {
+        return res.status(400).json({ message: 'Invalid status!' })
+    }
+
+    try {
+        const updatedData = await appointmentService.update(appointmentId, { date, time, status })
+
+        res.status(200).json(updatedData)
+    } catch (err) {
+        console.error(err);
+        res.status(404).json({ message: err.message })
+    }
+})
+
 export default appointmentController;
