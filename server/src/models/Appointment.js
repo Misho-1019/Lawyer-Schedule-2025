@@ -4,19 +4,20 @@ const appointmentSchema = new Schema({
     client: {
         type: Types.ObjectId,
         ref: 'User',
+        required: true,
     },
-    date: {
-        type: String,
-    },
-    time: {
-        type: String,
+    dateTime: {
+        type: Date,
+        required: true,
     },
     status: {
         type: String,
         enum: ['pending', 'confirmed', 'completed', 'rejected'],
         default: 'pending',
+        trim: true,
     }
-})
+});
+
 
 const Appointment = model('Appointment', appointmentSchema)
 
