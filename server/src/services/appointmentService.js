@@ -35,5 +35,16 @@ export default {
         const result = await appointment.save();
 
         return result;
+    },
+    async delete(appointmentId) {
+        const appointment = await Appointment.findById(appointmentId)
+
+        if (!appointment) {
+            throw new Error('Appointment not found!')
+        }
+
+        await Appointment.findByIdAndDelete(appointmentId)
+
+        return appointment
     }
 }
