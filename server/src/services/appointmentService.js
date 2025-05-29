@@ -4,6 +4,15 @@ export default {
     getAll() {
         return Appointment.find({}).sort({ date: 1, time: 1 });
     },
+    async getOne(appointmentId) {
+        const appointment = await Appointment.findById(appointmentId)
+
+        if (!appointment) {
+            throw new Error('Appointment does not exist!');
+        }
+
+        return appointment
+    },
     getByClient(clientId) {
         return Appointment.find({ client: clientId })
     },

@@ -79,4 +79,32 @@ appointmentController.delete('/:appointmentId', isAuth, isAdmin, async (req, res
     }
 })
 
+appointmentController.patch('/:appointmentId/cancel', isAuth, async (req, res) => {
+    const appointmentId = req.params.appointmentId;
+    const userId = req.user.id;
+    const { status } = req.body
+
+    if (status !== 'cancelled') {
+        return res.status(400).json({ message: 'Invalid status change!' })
+    }
+
+    try {
+        const appointment = await appointmentService.getOne(appointmentId)
+
+        if (appointment.client.toString() !== userId) {
+            return res.status(409).json({ message: 'Appointment does not belong to that user!' })
+        }
+
+        const updatedAppointment = await appointmentService.update(appointmentId, { status })
+
+        res.status(200).json(updatedAppointment)
+    } catch (err) {
+        if (err.message === 'Appointment does not exist!') {
+            return res.status(404).json({ message: err.message })
+        }
+
+        res.status(500).json({ message: err.message })
+    }
+})
+
 export default appointmentController;
