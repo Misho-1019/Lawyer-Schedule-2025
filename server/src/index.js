@@ -2,6 +2,7 @@ import express from "express";
 import cookieParser from "cookie-parser";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
+import helmet from "helmet";
 import router from "./routes.js";
 import { authMiddleware } from "./middlewares/authMiddleware.js";
 dotenv.config();
@@ -18,10 +19,7 @@ try {
     console.error(error.message);
 }
 
-app.get('/', (req, res) => {
-    res.send('It works!');
-})
-
+app.use(helmet())
 app.use(express.json())
 app.use(cookieParser())
 app.use(authMiddleware)
