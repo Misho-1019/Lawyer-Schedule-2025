@@ -7,8 +7,16 @@ export default {
     getByClient(clientId) {
         return Appointment.find({ client: clientId })
     },
-    create(appointmentData, creatorId) {
-        return Appointment.create({
+    async create(appointmentData, creatorId) {
+        const { date, time } = appointmentData
+
+        const conflict = await Appointment.findOne({ date, time })
+
+        if (conflict) {
+            throw new Error('This time slot is already booked!')
+        }
+        
+        return await Appointment.create({
             ...appointmentData,
             client: creatorId,
         })

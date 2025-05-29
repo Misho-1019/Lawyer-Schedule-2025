@@ -13,7 +13,10 @@ appointmentController.post('/appointments', isAuth, async (req, res) => {
 
         res.status(201).json(result)
     } catch (err) {
-        console.error(err.message);
+        if (err.message === 'This time slot is already booked!') {
+            res.status(409).json({ message: err.message })
+        }
+
         res.status(400).json({ message: err.message })
     }
 })
