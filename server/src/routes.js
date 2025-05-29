@@ -5,6 +5,6 @@ import appointmentController from "./controllers/appointmentController.js";
 const router = Router();
 
 router.use('/auth', authController)
-router.use(appointmentController)
+router.use('/appointments', appointmentController)
 
 export default router;

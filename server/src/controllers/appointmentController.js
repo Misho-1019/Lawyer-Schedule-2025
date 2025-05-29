@@ -4,7 +4,7 @@ import { isAdmin, isAuth } from "../middlewares/authMiddleware.js";
 
 const appointmentController = Router();
 
-appointmentController.post('/appointments', isAuth, async (req, res) => {
+appointmentController.post('/', isAuth, async (req, res) => {
     const appointmentData = req.body;
     const clientId = req.user?.id;
 
@@ -21,7 +21,7 @@ appointmentController.post('/appointments', isAuth, async (req, res) => {
     }
 })
 
-appointmentController.get('/appointments', isAuth, async (req, res) => {
+appointmentController.get('/', isAuth, async (req, res) => {
     const clientId = req.user?.id;
 
     try {
@@ -33,7 +33,7 @@ appointmentController.get('/appointments', isAuth, async (req, res) => {
     }
 })
 
-appointmentController.get('/appointments/admin', isAuth, isAdmin, async (req, res) => {
+appointmentController.get('/admin', isAuth, isAdmin, async (req, res) => {
 
     try {
         const result = await appointmentService.getAll();
@@ -44,7 +44,7 @@ appointmentController.get('/appointments/admin', isAuth, isAdmin, async (req, re
     }
 })
 
-appointmentController.patch('/appointments/:appointmentId', isAuth, isAdmin, async (req, res) => {
+appointmentController.patch('/:appointmentId', isAuth, isAdmin, async (req, res) => {
     const appointmentId = req.params.appointmentId;
     const { date, time, status } = req.body;
 
@@ -63,7 +63,7 @@ appointmentController.patch('/appointments/:appointmentId', isAuth, isAdmin, asy
     }
 })
 
-appointmentController.delete('/appointments/:appointmentId', isAuth, isAdmin, async (req, res) => {
+appointmentController.delete('/:appointmentId', isAuth, isAdmin, async (req, res) => {
     const appointmentId = req.params.appointmentId;
 
     try {
@@ -74,7 +74,7 @@ appointmentController.delete('/appointments/:appointmentId', isAuth, isAdmin, as
         if (err.message === 'Appointment not found!') {
             return res.status(404).json({ message: err.message });
         }
-        
+
         res.status(500).json({ message: 'Failed to delete appointment!' })
     }
 })
