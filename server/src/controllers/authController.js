@@ -1,10 +1,17 @@
 import { Router } from "express";
 import authService from "../services/authService.js";
 import { isAuth, isGuest } from "../middlewares/authMiddleware.js";
+import rateLimit from "express-rate-limit";
 
 const authController = Router();
 
-authController.post('/register', isGuest, async (req, res) => {
+const authLimiter = rateLimit({
+    windowMs: 15 * 60 * 1000,
+    max: 5,
+    message: 'Too many login attempts, please try again after 15 minutes.',
+})
+
+authController.post('/register', authLimiter, isGuest, async (req, res) => {
     const authData = req.body;
 
     try {
@@ -20,7 +27,7 @@ authController.post('/register', isGuest, async (req, res) => {
     res.end();
 })
 
-authController.post('/login', isGuest, async (req, res) => {
+authController.post('/login', authLimiter, isGuest, async (req, res) => {
     const { email, password } = req.body;
 
     try {
