@@ -3,6 +3,8 @@ import cookieParser from "cookie-parser";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
 import helmet from "helmet";
+import xss from "xss-clean";
+import cors from "cors";
 import { rateLimit } from "express-rate-limit";
 import router from "./routes.js";
 import { authMiddleware } from "./middlewares/authMiddleware.js";
@@ -20,6 +22,11 @@ try {
     console.error(error.message);
 }
 
+app.use(cors({
+    origin: 'http://localhost:5173',
+    credentials: true,
+}))
+
 app.use(helmet())
 app.use(express.json())
 app.use(cookieParser())
@@ -32,6 +39,7 @@ const globalLimiter = rateLimit({
 
 app.use(globalLimiter)
 app.use(authMiddleware)
+app.use(xss())
 
 app.use(router)
 
