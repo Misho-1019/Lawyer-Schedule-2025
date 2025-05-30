@@ -1,10 +1,21 @@
 import { Router } from "express";
+import { body, validationResult } from "express-validator";
 import appointmentService from "../services/appointmentService.js";
 import { isAdmin, isAuth } from "../middlewares/authMiddleware.js";
 
 const appointmentController = Router();
 
-appointmentController.post('/', isAuth, async (req, res) => {
+appointmentController.post('/', isAuth, [
+    body('date').notEmpty().withMessage('Date is required!').isISO8601().withMessage('Date must be in valid YYYY-MM-DD format!'),
+    body('time').notEmpty().withMessage('Time is required!').matches(/^([0-1]\d|2[0-3]):([0-5]\d)$/).withMessage('Time must be in HH:MM 24-hour format!'),
+    body('status').optional().isIn(['pending', 'confirmed', 'completed', 'cancelled']).withMessage('Status must be one of: pending, confirmed, completed, cancelled')
+], async (req, res) => {
+    const errors = validationResult(req)
+    
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() })
+    }
+
     const appointmentData = req.body;
     const clientId = req.user?.id;
 
@@ -79,7 +90,9 @@ appointmentController.delete('/:appointmentId', isAuth, isAdmin, async (req, res
     }
 })
 
-appointmentController.patch('/:appointmentId/cancel', isAuth, async (req, res) => {
+appointmentController.patch('/:appointmentId/cancel', isAuth, [
+    body('status').equals('cancelled').withMessage('Only "cancelled" status is allowed on this endpoint!')
+], async (req, res) => {
     const appointmentId = req.params.appointmentId;
     const userId = req.user.id;
     const { status } = req.body
