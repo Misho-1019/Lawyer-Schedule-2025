@@ -1,4 +1,5 @@
 import Appointment from "../models/Appointment.js"
+import BlockedTime from "../models/BlockedTime.js";
 
 export default {
     getAll() {
@@ -23,6 +24,12 @@ export default {
 
         if (conflict) {
             throw new Error('This time slot is already booked!')
+        }
+
+        const blocked = await BlockedTime.findOne({ date, time })
+
+        if (blocked) {
+            throw new Error('During this time slot Victor Todorov is already busy. Choose another time slot!')
         }
         
         return await Appointment.create({
@@ -63,5 +70,21 @@ export default {
         await Appointment.findByIdAndDelete(appointmentId)
 
         return appointment
+    },
+    async blockedTime(blockedTimeData) {
+        const { date, time } = blockedTimeData;
+
+        const exists = await BlockedTime.findOne({ date, time })
+
+        if (exists) {
+            throw new Error('Time slot already blocked!')
+        }
+
+        const result = await BlockedTime.create(blockedTimeData)
+
+        return result;
+    },
+    async getBlockedTime() {
+        return await BlockedTime.find({}).sort({ date: 1, time: 1 })
     }
 }

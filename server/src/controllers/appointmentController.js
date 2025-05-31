@@ -24,7 +24,7 @@ appointmentController.post('/', isAuth, [
 
         res.status(201).json(result)
     } catch (err) {
-        if (err.message === 'This time slot is already booked!') {
+        if (err.message === 'This time slot is already booked!' || err.message === 'During this time slot Victor Todorov is already busy. Choose another time slot!') {
             res.status(409).json({ message: err.message })
         }
 
@@ -116,6 +116,32 @@ appointmentController.patch('/:appointmentId/cancel', isAuth, [
             return res.status(404).json({ message: err.message })
         }
 
+        res.status(500).json({ message: err.message })
+    }
+})
+
+appointmentController.post('/blocked-time', isAuth, isAdmin, async (req, res) => {
+    const { date, time, reason } = req.body;
+
+    try {
+        const blockedTime = await appointmentService.blockedTime({ date, time, reason })
+
+        res.status(201).json(blockedTime)
+    } catch (err) {
+        if (err.message === 'Time slot already blocked!') {
+            return res.status(409).json({ message: err.message })
+        }
+
+        res.status(500).json({ message: err.message })
+    }
+})
+
+appointmentController.get('/blocked-time', isAuth, async (req, res) => {
+    try {
+        const blockedTimes = await appointmentService.getBlockedTime();
+
+        res.status(200).json(blockedTimes)
+    } catch (err) {
         res.status(500).json({ message: err.message })
     }
 })
