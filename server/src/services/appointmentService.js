@@ -86,5 +86,16 @@ export default {
     },
     async getBlockedTime() {
         return await BlockedTime.find({}).sort({ date: 1, time: 1 })
+    },
+    async deleteBlockedTime(appointmentId) {
+        const blocked = await BlockedTime.findById(appointmentId);
+
+        if (!blocked) {
+            throw new Error('Blocked time is not found!')
+        }
+
+        await BlockedTime.findByIdAndDelete(appointmentId)
+
+        return blocked
     }
 }
