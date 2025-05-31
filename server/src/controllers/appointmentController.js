@@ -18,9 +18,11 @@ appointmentController.post('/', isAuth, [
 
     const appointmentData = req.body;
     const clientId = req.user?.id;
+    const clientEmail = req.user.email
+    
 
     try {
-        const result = await appointmentService.create(appointmentData, clientId);
+        const result = await appointmentService.create(appointmentData, clientId, clientEmail);
 
         res.status(201).json(result)
     } catch (err) {

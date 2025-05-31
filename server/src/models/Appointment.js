@@ -6,6 +6,10 @@ const appointmentSchema = new Schema({
         ref: 'User',
         required: true,
     },
+    email: {
+        type: String,
+        required: true,
+    },
     date: {
         type: Date,
         required: true,

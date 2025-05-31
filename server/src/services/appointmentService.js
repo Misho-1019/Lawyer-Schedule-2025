@@ -17,7 +17,7 @@ export default {
     getByClient(clientId) {
         return Appointment.find({ client: clientId })
     },
-    async create(appointmentData, creatorId) {
+    async create(appointmentData, creatorId, clientEmail) {
         const { date, time } = appointmentData
 
         const conflict = await Appointment.findOne({ date, time })
@@ -35,6 +35,7 @@ export default {
         return await Appointment.create({
             ...appointmentData,
             client: creatorId,
+            email: clientEmail,
         })
     },
     async update(appointmentId, updateData) {
