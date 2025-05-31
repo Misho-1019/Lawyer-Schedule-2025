@@ -3,7 +3,6 @@ import cookieParser from "cookie-parser";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
 import helmet from "helmet";
-import xss from "xss-clean";
 import cors from "cors";
 import { rateLimit } from "express-rate-limit";
 import router from "./routes.js";
@@ -39,7 +38,6 @@ const globalLimiter = rateLimit({
 
 app.use(globalLimiter)
 app.use(authMiddleware)
-app.use(xss())
 
 app.use(router)
 
