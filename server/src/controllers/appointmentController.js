@@ -82,6 +82,12 @@ appointmentController.patch('/:appointmentId', isAuth, isAdmin, async (req, res)
     try {
         const updatedData = await appointmentService.update(appointmentId, { date, time, status })
 
+        await sendAppointmentEmail(
+            process.env.EMAIL_USER,
+            'Appointment Status Update',
+            `<p>Your appointment on ${updatedData.date} at ${updatedData.time} is now <strong>${status}<strong>.<p>`
+        )
+
         res.status(200).json(updatedData)
     } catch (err) {
         console.error(err);
@@ -124,6 +130,12 @@ appointmentController.patch('/:appointmentId/cancel', isAuth, [
         }
 
         const updatedAppointment = await appointmentService.update(appointmentId, { status })
+
+        await sendAppointmentEmail(
+            process.env.ADMIN_EMAIL,
+            'Appointment Status Update',
+            `Appointment Status updated by ${updatedAppointment.email} on ${updatedAppointment.date} at ${updatedAppointment.time}`
+        )
 
         res.status(200).json(updatedAppointment)
     } catch (err) {

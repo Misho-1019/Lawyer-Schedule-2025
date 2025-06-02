@@ -24,7 +24,6 @@ export async function sendAppointmentEmail(to, subject, htmlContent) {
 
         console.log('Email sent', info.response);
     } catch (err) {
-        console.log('Email sending error:', err.message);
-        
+        console.log('Email sending error:', err.message);   
     }
 }
