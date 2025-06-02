@@ -2,6 +2,7 @@ import { Router } from "express";
 import { body, validationResult } from "express-validator";
 import appointmentService from "../services/appointmentService.js";
 import { isAdmin, isAuth } from "../middlewares/authMiddleware.js";
+import { sendAppointmentEmail } from "../utils/email.js";
 
 const appointmentController = Router();
 
@@ -23,6 +24,12 @@ appointmentController.post('/', isAuth, [
 
     try {
         const result = await appointmentService.create(appointmentData, clientId, clientEmail);
+
+        await sendAppointmentEmail(
+            clientEmail,
+            'Appointment Confirmation',
+            `Your appointment has been booked for ${result.date} at ${result.time}`
+        )
 
         res.status(201).json(result)
     } catch (err) {
