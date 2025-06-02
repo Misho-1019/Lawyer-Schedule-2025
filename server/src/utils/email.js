@@ -1,4 +1,4 @@
-import nodemailer, { createTransport } from "nodemailer";
+import { createTransport } from "nodemailer";
 import dotenv from "dotenv";
 
 dotenv.config();

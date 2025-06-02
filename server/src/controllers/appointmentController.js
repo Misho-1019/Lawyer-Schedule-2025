@@ -31,6 +31,12 @@ appointmentController.post('/', isAuth, [
             `Your appointment has been booked for ${result.date} at ${result.time}`
         )
 
+        await sendAppointmentEmail(
+            process.env.ADMIN_EMAIL,
+            'New Appointment Booked',
+            `New appointment booked by ${clientEmail} on ${result.date} at ${result.time}`
+        )
+
         res.status(201).json(result)
     } catch (err) {
         if (err.message === 'This time slot is already booked!' || err.message === 'During this time slot Victor Todorov is already busy. Choose another time slot!') {
