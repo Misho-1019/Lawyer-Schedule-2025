@@ -147,4 +147,14 @@ appointmentController.patch('/:appointmentId/cancel', isAuth, [
     }
 })
 
+appointmentController.get('/stats', isAuth, isAdmin, async (req, res) => {
+    try {
+        const stats = await appointmentService.getStats();
+
+        res.status(200).json(stats)
+    } catch (err) {
+        res.status(500).json({ message: err.message })
+    }
+})
+
 export default appointmentController;

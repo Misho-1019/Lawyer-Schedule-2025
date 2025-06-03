@@ -98,5 +98,31 @@ export default {
         await BlockedTime.findByIdAndDelete(appointmentId)
 
         return blocked
+    },
+    async getStats() {
+        const today = new Date()
+        today.setHours(0, 0, 0, 0)
+
+        const startOfTheWeek = new Date(today);
+        startOfTheWeek.setDate(today.getDate() - today.getDay())
+
+        const endOfTheWeek = new Date(today);
+        endOfTheWeek.setDate(today.getDate() + (6 - today.getDay()))
+
+        const [todayCount, weekCount, totalBlocked, pending, confirmed] = await Promise.all([
+            Appointment.countDocuments({ date: {$eq: today } }),
+            Appointment.countDocuments({ date: { $gte: startOfTheWeek, $lte: endOfTheWeek } }),
+            BlockedTime.countDocuments(),
+            Appointment.countDocuments({ status: 'pending' }),
+            Appointment.countDocuments({ status: 'confirmed' })
+        ])
+
+        return {
+            todayCount,
+            weekCount,
+            totalBlocked,
+            pending,
+            confirmed,
+        }
     }
 }
