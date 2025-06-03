@@ -1,9 +1,9 @@
 import cron from "node-cron";
 import dayjs from "dayjs";
-import Appointment from "../models/Appointment";
-import { sendAppointmentEmail } from "./email";
+import Appointment from "../models/Appointment.js";
+import { sendAppointmentEmail } from "./email.js";
 
-cron.schedule('*/5* * * *', async () => {
+cron.schedule('*/5 * * * *', async () => {
     const now = new Date();
     const oneHourLater = new Date(now.getTime() + 60 * 60 * 1000)
     const twentyFourHoursLater = new Date(now.getTime() + 24 * 60 * 60 * 1000)
