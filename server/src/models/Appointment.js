@@ -24,6 +24,14 @@ const appointmentSchema = new Schema({
         enum: ['pending', 'confirmed', 'completed', 'cancelled'],
         default: 'pending',
         trim: true,
+    },
+    reminder24hSent: {
+        type: Boolean,
+        default: false
+    },
+    reminder1hSent: {
+        type: Boolean,
+        default: false,
     }
 });
 

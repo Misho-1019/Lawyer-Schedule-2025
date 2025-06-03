@@ -7,6 +7,8 @@ import cors from "cors";
 import { rateLimit } from "express-rate-limit";
 import router from "./routes.js";
 import { authMiddleware } from "./middlewares/authMiddleware.js";
+import './utils/reminderAppointment.js';
+
 dotenv.config();
 
 const app = express();
