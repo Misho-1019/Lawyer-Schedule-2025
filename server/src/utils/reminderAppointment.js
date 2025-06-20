@@ -5,49 +5,52 @@ import { sendAppointmentEmail } from "./email.js";
 
 cron.schedule('*/5 * * * *', async () => {
     const now = new Date();
-    const oneHourLater = new Date(now.getTime() + 60 * 60 * 1000)
-    const twentyFourHoursLater = new Date(now.getTime() + 24 * 60 * 60 * 1000)
+    const oneHourLater = new Date(now.getTime() + 60 * 60 * 1000);
+    const twentyFourHoursLater = new Date(now.getTime() + 24 * 60 * 60 * 1000);
+
+    const hourTargetDate = dayjs(oneHourLater).format('YYYY-MM-DD');
+    const hourTargetTime = dayjs(oneHourLater).format('HH:mm');
+
+    const dayTargetDate = dayjs(twentyFourHoursLater).format('YYYY-MM-DD');
+    const dayTargetTime = dayjs(twentyFourHoursLater).format('HH:mm');
 
     try {
+        // 1h reminders
         const hourAppointments = await Appointment.find({
-            date: {
-                $eq: dayjs(oneHourLater).format('YYYY-MM-DD')
-            },
-            time: dayjs(oneHourLater).format('HH:mm'),
+            date: hourTargetDate,
+            time: hourTargetTime,
             reminder1hSent: false,
-        })
+        });
 
-        for (let app of hourAppointments) {
+        await Promise.all(hourAppointments.map(async (app) => {
             await sendAppointmentEmail(
-                process.env.EMAIL_USER,
-                '1 Hour Reminder: Appointment',
-                `Reminder: You have an appointment at ${app.time} today.`
-            )
+                process.env.EMAIL_USER, // <-- fix here
+                '🔔 1 Hour Reminder: Appointment',
+                `Hi, this is a reminder that you have an appointment with Victor Todorov at ${app.time} today.`
+            );
 
             app.reminder1hSent = true;
             await app.save();
-        }
+        }));
 
+        // 24h reminders
         const dayAppointments = await Appointment.find({
-            date: {
-                $eq: dayjs(twentyFourHoursLater).format('YYYY-MM-DD')
-            },
-            time: dayjs(twentyFourHoursLater).format('HH:mm'),
+            date: dayTargetDate,
+            time: dayTargetTime,
             reminder24hSent: false,
-        })
+        });
 
-        for (let app of dayAppointments) {
+        await Promise.all(dayAppointments.map(async (app) => {
             await sendAppointmentEmail(
                 process.env.EMAIL_USER,
-                '24 Hour Reminder: Appointment',
-                `Reminder: You have an appointment tomorrow at ${app.time}.`
-            )
+                '📅 24 Hour Reminder: Appointment',
+                `Hi, just a reminder that you have an appointment tomorrow at ${app.time} with Victor Todorov.`
+            );
 
             app.reminder24hSent = true;
             await app.save();
-        }
+        }));
     } catch (error) {
-        console.error(error.message);
-        
+        console.error('Reminder cron job failed:', error.message);
     }
-})
+});
