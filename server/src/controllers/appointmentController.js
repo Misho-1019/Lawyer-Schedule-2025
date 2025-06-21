@@ -146,11 +146,19 @@ appointmentController.patch('/:appointmentId/cancel', isAuth, [
 
         const updatedAppointment = await appointmentService.update(appointmentId, { status })
 
-        await sendAppointmentEmail(
-            process.env.ADMIN_EMAIL,
-            'Appointment Status Update',
-            `Appointment Status updated by ${updatedAppointment.email} on ${updatedAppointment.date} at ${updatedAppointment.time}`
-        )
+        if (updatedAppointment.status === 'cancelled') {
+            await sendAppointmentEmail(
+                process.env.ADMIN_EMAIL,
+                'Appointment Cancelled',
+                `Appointment cancelled by ${updatedAppointment.email} on ${updatedAppointment.date} at ${updatedAppointment.time}`
+            )
+
+            await sendAppointmentEmail(
+                process.env.EMAIL_USER,
+                'Appointment Cancelled',
+                `<p>Your appointment on ${existingAppointment.date} at ${existingAppointment.time} was cancelled.</p>`
+            )
+        }
 
         res.status(200).json(updatedAppointment)
     } catch (err) {
