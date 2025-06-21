@@ -156,7 +156,7 @@ appointmentController.patch('/:appointmentId/cancel', isAuth, [
             await sendAppointmentEmail(
                 process.env.EMAIL_USER,
                 'Appointment Cancelled',
-                `<p>Your appointment on ${existingAppointment.date} at ${existingAppointment.time} was cancelled.</p>`
+                `<p>Your appointment on ${updatedAppointment.date} at ${updatedAppointment.time} was cancelled.</p>`
             )
         }
 
