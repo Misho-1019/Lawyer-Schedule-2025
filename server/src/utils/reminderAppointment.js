@@ -24,7 +24,7 @@ cron.schedule('*/5 * * * *', async () => {
 
         await Promise.all(hourAppointments.map(async (app) => {
             await sendAppointmentEmail(
-                process.env.EMAIL_USER, // <-- fix here
+                process.env.EMAIL_USER,
                 '🔔 1 Hour Reminder: Appointment',
                 `Hi, this is a reminder that you have an appointment with Victor Todorov at ${app.time} today.`
             );

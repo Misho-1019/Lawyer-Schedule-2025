@@ -12,7 +12,7 @@ appointmentController.post('/', isAuth, [
     body('status').optional().isIn(['pending', 'confirmed', 'completed', 'cancelled']).withMessage('Status must be one of: pending, confirmed, completed, cancelled')
 ], async (req, res) => {
     const errors = validationResult(req)
-    
+
     if (!errors.isEmpty()) {
         return res.status(400).json({ errors: errors.array() })
     }
@@ -20,7 +20,7 @@ appointmentController.post('/', isAuth, [
     const appointmentData = req.body;
     const clientId = req.user?.id;
     const clientEmail = req.user.email
-    
+
 
     try {
         const result = await appointmentService.create(appointmentData, clientId, clientEmail);
@@ -66,7 +66,7 @@ appointmentController.get('/admin', isAuth, isAdmin, async (req, res) => {
 
         res.status(200).json(result)
     } catch (err) {
-        res.status(500).json({ error: 'Failed to fetch data!'})
+        res.status(500).json({ error: 'Failed to fetch data!' })
     }
 })
 
@@ -80,13 +80,28 @@ appointmentController.patch('/:appointmentId', isAuth, isAdmin, async (req, res)
     }
 
     try {
+        const existingAppointment = await appointmentService.getOne(appointmentId)
+
+        if (!existingAppointment) {
+            return res.status(404).json({ message: 'Appointment not found!' })
+        }
+
         const updatedData = await appointmentService.update(appointmentId, { date, time, status })
 
-        await sendAppointmentEmail(
-            process.env.EMAIL_USER,
-            'Appointment Status Update',
-            `<p>Your appointment on ${updatedData.date} at ${updatedData.time} is now <strong>${status}<strong>.<p>`
-        )
+        if (date !== existingAppointment.date || time !== existingAppointment.time) {
+            await sendAppointmentEmail(
+                process.env.EMAIL_USER,
+                'Appointment Rescheduled',
+                `<p>Your appointment has been rescheduled to ${updatedData.date} at ${updatedData.time}.<p>`
+            )
+        }
+        else if (status && status !== existingAppointment.status) {
+            await sendAppointmentEmail(
+                process.env.EMAIL_USER,
+                'Appointment Status Update',
+                `<p>Your appointment on ${updatedData.date} at ${updatedData.time} is now <strong>${status}<strong>.<p>`
+            )
+        }
 
         res.status(200).json(updatedData)
     } catch (err) {
@@ -101,7 +116,7 @@ appointmentController.delete('/:appointmentId', isAuth, isAdmin, async (req, res
     try {
         await appointmentService.delete(appointmentId)
 
-        res.status(200).json({ message: 'Deleted successfully!'})
+        res.status(200).json({ message: 'Deleted successfully!' })
     } catch (err) {
         if (err.message === 'Appointment not found!') {
             return res.status(404).json({ message: err.message });
