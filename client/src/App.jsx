@@ -10,14 +10,17 @@ import Login from './components/login/Login'
 import Register from './components/register/Register'
 import RescheduleAppointment from './components/reschedule/RescheduleAppointment'
 import MyAppointments from './components/user/MyAppointments'
+import { Route, Routes } from "react-router";
 
 function App() {
     return (
         <>
             <div>
                 <Header />
-                
-                {/* <Home /> */}
+
+                <Routes>
+                    <Route path='/' element={ <Home /> }/>
+                </Routes>
 
                 {/* <Register /> */}
                 {/* <Login /> */}
@@ -27,7 +30,7 @@ function App() {
                 {/* <RescheduleAppointment /> */}
                 {/* <AdminDashboard /> */}
                 {/* <AdminAllAppointments /> */}
-                <BlockedTime />
+                {/* <BlockedTime /> */}
             </div>
         </>
     )
