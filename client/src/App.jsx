@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import './App.css'
 import AdminAllAppointments from './components/admin/AllAppointments'
 import BlockedTime from './components/blocked/BlockedTime'
@@ -13,6 +14,12 @@ import MyAppointments from './components/user/MyAppointments'
 import { Route, Routes } from "react-router";
 
 function App() {
+    const [email, setEmail] = useState('');
+
+    const userLoginHandler = (email) => {
+        setEmail(email)
+    }
+
     return (
         <>
             <div>
@@ -21,9 +28,9 @@ function App() {
                 <Routes>
                     <Route path='/' element={ <Home /> }/>
                     <Route path='/register' element={ <Register /> }/>
-                    <Route path='/login' element={ <Login /> }/>
+                    <Route path='/login' element={ <Login onLogin={userLoginHandler} /> }/>
                 </Routes>
-                
+
                 {/* <BookAppointment /> */}
                 {/* <MyAppointments /> */}
                 {/* <AppointmentConfirmation /> */}
