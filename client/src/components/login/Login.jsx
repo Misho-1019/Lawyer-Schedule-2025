@@ -1,3 +1,4 @@
+import { useActionState } from "react";
 import { useNavigate } from "react-router";
 
 // Login.jsx
@@ -6,13 +7,19 @@ export default function Login({
 }) {
     const navigate = useNavigate();
 
-    const loginAction = (formData) => {
-        const email = formData.get('email')
+    const loginHandler = (previousState, formData) => {
+        const values = Object.fromEntries(formData)
 
-        onLogin(email)
+        onLogin(values.email)
 
-        navigate('/')
+        return values
+        // navigate('/')
     }
+
+    const [values, loginAction, isPending] = useActionState(loginHandler, { email: '', password: '' })
+
+    console.log(values);
+    
     return (
         <main className="bg-slate-50 min-h-screen flex items-center justify-center py-16 px-4">
             <div className="bg-white shadow-lg rounded-xl w-full max-w-md p-8 space-y-6">
@@ -46,6 +53,7 @@ export default function Login({
 
                     <button
                         type="submit"
+                        disabled={isPending}
                         className="w-full bg-emerald-500 hover:bg-emerald-600 text-white font-semibold py-2 px-4 rounded-lg transition shadow"
                     >
                         Login
