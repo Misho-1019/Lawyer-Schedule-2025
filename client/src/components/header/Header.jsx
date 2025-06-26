@@ -1,3 +1,5 @@
+import { Link } from "react-router";
+
 // Header.jsx
 export default function Header() {
     return (
@@ -10,20 +12,26 @@ export default function Header() {
 
                 {/* Navigation Links */}
                 <nav className="hidden md:flex space-x-6 text-sm font-medium">
-                    <a href="#" className="hover:text-yellow-400 transition">Home</a>
-                    <a href="#" className="hover:text-yellow-400 transition">Appointments</a>
-                    <a href="#" className="hover:text-yellow-400 transition">Contact</a>
-                    <a href="#" className="hover:text-yellow-400 transition">Admin</a>
+                    <Link to="/" className="hover:text-yellow-400 transition">Home</Link>
+                    {/* <Link to="#" className="hover:text-yellow-400 transition">Contact</Link> */}
+                    <Link to="/register" className="hover:text-yellow-400 transition">Register</Link>
+                    <Link to="/login" className="hover:text-yellow-400 transition">Login</Link>
+
+                    <Link to="user/my-appointments" className="hover:text-yellow-400 transition">My Appointments</Link>
+                    
+                    <Link to="/admin/appointments" className="hover:text-yellow-400 transition">All Appointments</Link>
+                    <Link to="/admin/blocked" className="hover:text-yellow-400 transition">Blocked Time</Link>
+                    <Link to="/admin/stats" className="hover:text-yellow-400 transition">My Board</Link>
                 </nav>
 
                 {/* CTA Button */}
                 <div className="hidden md:block">
-                    <a
-                        href="#"
+                    <Link
+                        to="/user/book"
                         className="bg-emerald-500 text-white px-4 py-2 rounded-lg hover:bg-emerald-600 transition shadow"
                     >
                         Book Appointment
-                    </a>
+                    </Link>
                 </div>
             </div>
         </header>
