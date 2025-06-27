@@ -26,18 +26,18 @@ function App() {
             <div>
                 <Header />
 
-                <Routes>
+                {/* <Routes>
                     <Route path='/' element={<Home />} />
                     <Route path='/register' element={<Register />} />
                     <Route path='/login' element={<Login />} />
-                </Routes>
+                </Routes> */}
 
                 {/* <BookAppointment /> */}
                 {/* <MyAppointments /> */}
                 {/* <AppointmentConfirmation /> */}
                 {/* <RescheduleAppointment /> */}
                 {/* <AdminDashboard /> */}
-                {/* <AdminAllAppointments /> */}
+                <AdminAllAppointments />
                 {/* <BlockedTime /> */}
             </div>
         </UserContext.Provider>

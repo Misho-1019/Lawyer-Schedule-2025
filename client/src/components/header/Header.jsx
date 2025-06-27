@@ -3,32 +3,44 @@ import { Link } from "react-router";
 // Header.jsx
 export default function Header() {
     return (
-        <header className="bg-blue-900 text-white shadow-md">
+        <header className="bg-gradient-to-r from-blue-950 via-indigo-900 to-blue-800 text-white shadow-lg">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
                 {/* Logo / Brand */}
-                <div className="text-2xl font-semibold tracking-wide">
-                    <span className="text-yellow-400">⚖</span> LawFirmApp
+                <div className="text-3xl font-bold tracking-wide">
+                    <span className="text-yellow-400">⚖</span>{" "}
+                    <span className="text-white">VT Schedule</span>
                 </div>
 
                 {/* Navigation Links */}
-                <nav className="hidden md:flex space-x-6 text-sm font-medium">
-                    <Link to="/" className="hover:text-yellow-400 transition">Home</Link>
-                    {/* <Link to="#" className="hover:text-yellow-400 transition">Contact</Link> */}
-                    <Link to="/register" className="hover:text-yellow-400 transition">Register</Link>
-                    <Link to="/login" className="hover:text-yellow-400 transition">Login</Link>
-
-                    <Link to="user/my-appointments" className="hover:text-yellow-400 transition">My Appointments</Link>
-                    
-                    <Link to="/admin/appointments" className="hover:text-yellow-400 transition">All Appointments</Link>
-                    <Link to="/admin/blocked" className="hover:text-yellow-400 transition">Blocked Time</Link>
-                    <Link to="/admin/stats" className="hover:text-yellow-400 transition">My Board</Link>
+                <nav className="hidden md:flex space-x-6 text-base font-medium">
+                    <Link to="/" className="hover:text-yellow-300 transition-colors duration-300">
+                        Home
+                    </Link>
+                    <Link to="/register" className="hover:text-yellow-300 transition-colors duration-300">
+                        Register
+                    </Link>
+                    <Link to="/login" className="hover:text-yellow-300 transition-colors duration-300">
+                        Login
+                    </Link>
+                    <Link to="/user/my-appointments" className="hover:text-yellow-300 transition-colors duration-300">
+                        My Appointments
+                    </Link>
+                    <Link to="/admin/appointments" className="hover:text-yellow-300 transition-colors duration-300">
+                        All Appointments
+                    </Link>
+                    <Link to="/admin/blocked" className="hover:text-yellow-300 transition-colors duration-300">
+                        Blocked Time
+                    </Link>
+                    <Link to="/admin/stats" className="hover:text-yellow-300 transition-colors duration-300">
+                        My Board
+                    </Link>
                 </nav>
 
                 {/* CTA Button */}
                 <div className="hidden md:block">
                     <Link
                         to="/user/book"
-                        className="bg-emerald-500 text-white px-4 py-2 rounded-lg hover:bg-emerald-600 transition shadow"
+                        className="w-full bg-gradient-to-r from-emerald-700 via-emerald-500 to-lime-400 text-white font-semibold py-2 px-4 rounded-xl transition shadow hover:opacity-90 disabled:opacity-70"
                     >
                         Book Appointment
                     </Link>

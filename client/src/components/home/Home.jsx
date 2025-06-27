@@ -3,17 +3,17 @@ export default function Home() {
     return (
         <main className="bg-slate-50 min-h-screen text-gray-800">
             {/* Hero Section */}
-            <section className="bg-blue-900 text-white py-20 px-4">
+            <section className="bg-gradient-to-r from-blue-950 via-indigo-900 to-blue-800 text-white py-24 px-4">
                 <div className="max-w-7xl mx-auto text-center">
-                    <h1 className="text-4xl sm:text-5xl font-bold mb-4">
+                    <h1 className="text-4xl sm:text-5xl font-bold mb-6 leading-tight">
                         Schedule Your Legal Appointment with Victor Todorov
                     </h1>
-                    <p className="text-lg sm:text-xl mb-8">
-                        Trusted legal advice from a dedicated professional. Easy, online booking.
+                    <p className="text-lg sm:text-xl mb-10 max-w-2xl mx-auto">
+                        Trusted legal advice from a dedicated professional. Book online in minutes with confidence.
                     </p>
                     <a
                         href="#"
-                        className="inline-block bg-emerald-500 hover:bg-emerald-600 text-white px-6 py-3 rounded-lg text-base font-semibold shadow transition"
+                        className="inline-block bg-emerald-500 hover:bg-emerald-600 text-white px-6 py-3 rounded-xl text-base font-semibold shadow-md transition"
                     >
                         Book an Appointment
                     </a>
@@ -21,28 +21,34 @@ export default function Home() {
             </section>
 
             {/* Features Section */}
-            <section className="py-16 px-4">
+            <section className="py-20 px-4">
                 <div className="max-w-6xl mx-auto text-center">
-                    <h2 className="text-3xl font-bold mb-12 text-blue-900">
+                    <h2 className="text-3xl font-bold mb-14 text-blue-900">
                         Why Choose Victor Todorov?
                     </h2>
                     <div className="grid gap-8 md:grid-cols-3 text-left">
-                        <div className="bg-white p-6 rounded-xl shadow">
-                            <h3 className="text-xl font-semibold text-blue-900 mb-2">Personalized Service</h3>
+                        <div className="bg-white p-8 rounded-2xl shadow hover:shadow-md transition">
+                            <h3 className="text-xl font-semibold text-blue-900 mb-3">
+                                Personalized Service
+                            </h3>
                             <p className="text-sm text-gray-600">
-                                Experience one-on-one consultations tailored to your unique legal needs.
+                                One-on-one consultations tailored to your unique legal needs—no generic solutions.
                             </p>
                         </div>
-                        <div className="bg-white p-6 rounded-xl shadow">
-                            <h3 className="text-xl font-semibold text-blue-900 mb-2">Straightforward Booking</h3>
+                        <div className="bg-white p-8 rounded-2xl shadow hover:shadow-md transition">
+                            <h3 className="text-xl font-semibold text-blue-900 mb-3">
+                                Straightforward Booking
+                            </h3>
                             <p className="text-sm text-gray-600">
-                                Schedule appointments quickly and easily, with no unnecessary steps.
+                                Schedule appointments quickly with zero hassle and transparent availability.
                             </p>
                         </div>
-                        <div className="bg-white p-6 rounded-xl shadow">
-                            <h3 className="text-xl font-semibold text-blue-900 mb-2">Reliable Reminders</h3>
+                        <div className="bg-white p-8 rounded-2xl shadow hover:shadow-md transition">
+                            <h3 className="text-xl font-semibold text-blue-900 mb-3">
+                                Reliable Reminders
+                            </h3>
                             <p className="text-sm text-gray-600">
-                                Receive timely email reminders so you never miss your appointment.
+                                Get timely email reminders so you’re always informed and prepared.
                             </p>
                         </div>
                     </div>
@@ -50,14 +56,14 @@ export default function Home() {
             </section>
 
             {/* Call to Action Footer Strip */}
-            <section className="bg-emerald-500 text-white py-12 px-4">
+            <section className="bg-gradient-to-br from-emerald-700 via-emerald-500 to-lime-400 text-white py-16 px-4">
                 <div className="max-w-7xl mx-auto text-center">
-                    <h2 className="text-2xl sm:text-3xl font-semibold mb-4">
+                    <h2 className="text-2xl sm:text-3xl font-semibold mb-6">
                         Ready to get legal support from Victor Todorov?
                     </h2>
                     <a
                         href="#"
-                        className="bg-white text-emerald-600 px-6 py-3 rounded-lg font-medium hover:bg-gray-100 transition"
+                        className="bg-white text-emerald-700 px-6 py-3 rounded-xl font-semibold hover:bg-gray-100 transition shadow"
                     >
                         Book Your Appointment Now
                     </a>
