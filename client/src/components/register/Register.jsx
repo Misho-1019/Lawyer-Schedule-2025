@@ -1,5 +1,32 @@
+import { useNavigate } from "react-router";
+import { useRegister } from "../../api/authApi";
+import { useContext } from "react";
+import { UserContext } from "../../context/UserContext";
+
 // Register.jsx
 export default function Register() {
+    const navigate = useNavigate()
+    const { register } = useRegister()
+    const { userLoginHandler } = useContext(UserContext)
+
+    const registerHandler = async (formData) => {
+        const values = Object.fromEntries(formData)
+
+        const rePassword = formData.get('re-password')
+
+        if (rePassword !== values.passowrd) {
+            console.log('Password mismatch!');
+            
+            return
+        }
+
+        const authData = await register(values.username, values.email, values.passowrd)
+
+        userLoginHandler(authData)
+
+        navigate('/')
+    }
+
     return (
         <main className="bg-slate-50 min-h-screen flex items-center justify-center py-16 px-4">
             <div className="bg-white shadow-lg rounded-xl w-full max-w-md p-8 space-y-6">
@@ -10,11 +37,12 @@ export default function Register() {
                     </p>
                 </div>
 
-                <form className="space-y-4">
+                <form className="space-y-4" action={registerHandler}>
                     <div>
                         <label className="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
                         <input
                             type="text"
+                            name="username"
                             className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-900"
                             placeholder="John Doe"
                         />
@@ -24,8 +52,9 @@ export default function Register() {
                         <label className="block text-sm font-medium text-gray-700 mb-1">Email</label>
                         <input
                             type="email"
+                            name="email"
                             className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-900"
-                            placeholder="you@example.com"
+                            placeholder="you@gmail.com"
                         />
                     </div>
 
@@ -33,6 +62,17 @@ export default function Register() {
                         <label className="block text-sm font-medium text-gray-700 mb-1">Password</label>
                         <input
                             type="password"
+                            name="password"
+                            className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-900"
+                            placeholder="••••••••"
+                        />
+                    </div>
+
+                    <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">Repeat Password</label>
+                        <input
+                            type="password"
+                            name="re-password"
                             className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-900"
                             placeholder="••••••••"
                         />
