@@ -1,28 +1,26 @@
-import { useActionState } from "react";
+import { useActionState, useContext } from "react";
 import { useNavigate } from "react-router";
 import { useLogin } from "../../api/authApi";
+import { UserContext } from "../../context/UserContext";
 
 // Login.jsx
-export default function Login({
-    onLogin,
-}) {
+export default function Login() {
     const navigate = useNavigate();
     const { login } = useLogin()
+    const { userLoginHandler } = useContext(UserContext)
 
     const loginHandler = async (_, formData) => {
         const values = Object.fromEntries(formData)
 
         const authData = await login(values.email, values.password)
 
-        onLogin(authData)
+        userLoginHandler(authData)
 
         navigate('/')
     }
 
     const [_, loginAction, isPending] = useActionState(loginHandler, { email: '', password: '' })
 
-    console.log(values);
-    
     return (
         <main className="bg-slate-50 min-h-screen flex items-center justify-center py-16 px-4">
             <div className="bg-white shadow-lg rounded-xl w-full max-w-md p-8 space-y-6">

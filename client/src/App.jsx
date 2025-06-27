@@ -12,6 +12,7 @@ import Register from './components/register/Register'
 import RescheduleAppointment from './components/reschedule/RescheduleAppointment'
 import MyAppointments from './components/user/MyAppointments'
 import { Route, Routes } from "react-router";
+import { UserContext } from './context/UserContext'
 
 function App() {
     const [authData, setAuthData] = useState({});
@@ -21,14 +22,14 @@ function App() {
     }
 
     return (
-        <>
+        <UserContext.Provider value={{ ...authData, userLoginHandler }}>
             <div>
                 <Header />
 
                 <Routes>
-                    <Route path='/' element={ <Home /> }/>
-                    <Route path='/register' element={ <Register /> }/>
-                    <Route path='/login' element={ <Login onLogin={userLoginHandler} /> }/>
+                    <Route path='/' element={<Home />} />
+                    <Route path='/register' element={<Register />} />
+                    <Route path='/login' element={<Login />} />
                 </Routes>
 
                 {/* <BookAppointment /> */}
@@ -39,7 +40,7 @@ function App() {
                 {/* <AdminAllAppointments /> */}
                 {/* <BlockedTime /> */}
             </div>
-        </>
+        </UserContext.Provider>
     )
 }
 
