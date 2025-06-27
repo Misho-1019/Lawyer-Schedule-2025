@@ -14,12 +14,10 @@ import MyAppointments from './components/user/MyAppointments'
 import { Route, Routes } from "react-router";
 
 function App() {
-    const [email, setEmail] = useState('');
+    const [authData, setAuthData] = useState({});
 
-    const userLoginHandler = (authData) => {
-        setEmail(authData.email)
-
-        console.log(email);
+    const userLoginHandler = (resultData) => {
+        setAuthData(resultData)
     }
 
     return (
