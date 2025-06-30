@@ -13,7 +13,7 @@ export default function Home() {
                     </p>
                     <a
                         href="#"
-                        className="inline-block bg-emerald-500 hover:bg-emerald-600 text-white px-6 py-3 rounded-xl text-base font-semibold shadow-md transition"
+                        className="w-full bg-gradient-to-r from-emerald-700 via-emerald-500 to-lime-400 text-white font-bold py-3 px-6 rounded-xl transition shadow hover:opacity-90 disabled:opacity-70"
                     >
                         Book an Appointment
                     </a>

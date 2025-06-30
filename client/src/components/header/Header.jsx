@@ -22,10 +22,13 @@ export default function Header() {
                     <Link to="/login" className="hover:text-yellow-300 transition-colors duration-300">
                         Login
                     </Link>
+                    <Link to="/logout" className="hover:text-yellow-300 transition-colors duration-300">
+                        Logout
+                    </Link>
                     <Link to="/user/my-appointments" className="hover:text-yellow-300 transition-colors duration-300">
                         My Appointments
                     </Link>
-                    <Link to="/admin/appointments" className="hover:text-yellow-300 transition-colors duration-300">
+                    {/* <Link to="/admin/appointments" className="hover:text-yellow-300 transition-colors duration-300">
                         All Appointments
                     </Link>
                     <Link to="/admin/blocked" className="hover:text-yellow-300 transition-colors duration-300">
@@ -33,7 +36,7 @@ export default function Header() {
                     </Link>
                     <Link to="/admin/stats" className="hover:text-yellow-300 transition-colors duration-300">
                         My Board
-                    </Link>
+                    </Link> */}
                 </nav>
 
                 {/* CTA Button */}
