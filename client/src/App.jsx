@@ -14,9 +14,10 @@ import MyAppointments from './components/user/MyAppointments'
 import { Route, Routes } from "react-router";
 import { UserContext } from './context/UserContext'
 import Logout from './components/logout/Logout'
+import usePersistedState from './hooks/usePersistedState'
 
 function App() {
-    const [authData, setAuthData] = useState({});
+    const [authData, setAuthData] = usePersistedState('auth', {});
 
     const userLoginHandler = (resultData) => {
         setAuthData(resultData)
