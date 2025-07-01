@@ -14,6 +14,7 @@ import MyAppointments from './components/user/MyAppointments'
 import Logout from './components/logout/Logout'
 import { UserProvider } from './providers/UserProvider'
 import AuthGuard from "./components/guards/AuthGuard";
+import GuestGuard from "./components/guards/GuestGuard";
 
 function App() {
 
@@ -24,7 +25,7 @@ function App() {
 
             <Routes>
                 <Route path='/' element={<Home />} />
-                
+
                 <Route element={<AuthGuard />}>
                     <Route path='/logout' element={<Logout />} />
                     <Route path='/user/book' element={<BookAppointment />} />
@@ -35,8 +36,10 @@ function App() {
                     <Route path='/admin/all-appointments' element={<AdminAllAppointments />} />
                     <Route path='/admin/block-time' element={<BlockedTime />} />
                 </Route>
-                <Route path='/register' element={<Register />} />
-                <Route path='/login' element={<Login />} />
+                <Route element={<GuestGuard />} >
+                    <Route path='/register' element={<Register />} />
+                    <Route path='/login' element={<Login />} />
+                </Route>
             </Routes>
 
             {/* <BookAppointment /> */}
