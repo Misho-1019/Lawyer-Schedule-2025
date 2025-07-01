@@ -1,13 +1,13 @@
-import { useActionState, useContext } from "react";
+import { useActionState } from "react";
 import { useNavigate } from "react-router";
 import { useLogin } from "../../api/authApi";
-import { UserContext } from "../../context/UserContext";
+import { useUserContext } from "../../context/UserContext";
 
 // Login.jsx
 export default function Login() {
     const navigate = useNavigate();
     const { login } = useLogin();
-    const { userLoginHandler } = useContext(UserContext);
+    const { userLoginHandler } = useUserContext()
 
     const loginHandler = async (_, formData) => {
         const values = Object.fromEntries(formData);
