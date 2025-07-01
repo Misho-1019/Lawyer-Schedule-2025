@@ -15,6 +15,8 @@ import Logout from './components/logout/Logout'
 import { UserProvider } from './providers/UserProvider'
 import AuthGuard from "./components/guards/AuthGuard";
 import GuestGuard from "./components/guards/GuestGuard";
+import AdminGuard from "./components/guards/AdminGuard";
+import ClientGuard from "./components/guards/ClientGuard";
 
 function App() {
 
@@ -28,13 +30,17 @@ function App() {
 
                 <Route element={<AuthGuard />}>
                     <Route path='/logout' element={<Logout />} />
-                    <Route path='/user/book' element={<BookAppointment />} />
-                    <Route path='/user/my-appointments' element={<MyAppointments />} />
-                    <Route path='/user/confirmation' element={<AppointmentConfirmation />} />
-                    <Route path='/user/reschedule' element={<RescheduleAppointment />} />
-                    <Route path='/admin/dashboard' element={<AdminDashboard />} />
-                    <Route path='/admin/all-appointments' element={<AdminAllAppointments />} />
-                    <Route path='/admin/block-time' element={<BlockedTime />} />
+                    <Route element={<AdminGuard />}>
+                        <Route path='/admin/stats' element={<AdminDashboard />} />
+                        <Route path='/admin/appointments' element={<AdminAllAppointments />} />
+                        <Route path='/admin/block-time' element={<BlockedTime />} />
+                    </Route>
+                    <Route element={<ClientGuard />}>
+                        <Route path='/user/book' element={<BookAppointment />} />
+                        <Route path='/user/my-appointments' element={<MyAppointments />} />
+                        <Route path='/user/confirmation' element={<AppointmentConfirmation />} />
+                        <Route path='/user/reschedule' element={<RescheduleAppointment />} />
+                    </Route>
                 </Route>
                 <Route element={<GuestGuard />} >
                     <Route path='/register' element={<Register />} />

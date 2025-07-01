@@ -1,11 +1,10 @@
 import { useContext } from "react";
 import { Link } from "react-router";
-import { UserContext } from "../../context/UserContext";
+import { UserContext, useUserContext } from "../../context/UserContext";
 
 // Header.jsx
 export default function Header() {
-    const { email, role } = useContext(UserContext)
-    const isLoggedIn = !!email;
+    const { email, role } = useUserContext()
 
     return (
         <header className="bg-gradient-to-r from-blue-950 via-indigo-900 to-blue-800 text-white shadow-lg">
@@ -49,7 +48,7 @@ export default function Header() {
                             <Link to="/admin/appointments" className="hover:text-yellow-300 transition-colors duration-300">
                                 All Appointments
                             </Link>
-                            <Link to="/admin/blocked" className="hover:text-yellow-300 transition-colors duration-300">
+                            <Link to="/admin/block-time" className="hover:text-yellow-300 transition-colors duration-300">
                                 Blocked Time
                             </Link>
                             <Link to="/admin/stats" className="hover:text-yellow-300 transition-colors duration-300">
