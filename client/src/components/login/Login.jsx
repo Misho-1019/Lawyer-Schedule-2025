@@ -21,7 +21,7 @@ export default function Login() {
     const {
         register,
         handleSubmit,
-        formState: { isSubmitting }
+        formState: { isSubmitting, errors }
     } = useForm({
         resolver: yupResolver(schema)
     })
@@ -48,18 +48,6 @@ export default function Login() {
         }
     };
 
-    const onError = (errors) => {
-        const firstError = Object.values(errors)[0]
-
-        if (firstError?.message) {
-            toast.error(firstError.message, {
-                position: 'top-center',
-                autoClose: 2000,
-                theme: 'dark',
-            })
-        }
-    }
-
     return (
         <main className="bg-gradient-to-r from-slate-100 to-slate-200 min-h-screen flex items-center justify-center py-16 px-4">
             <div className="bg-white shadow-xl rounded-2xl w-full max-w-md p-10 space-y-6 border border-slate-200">
@@ -70,7 +58,7 @@ export default function Login() {
                     </p>
                 </div>
 
-                <form className="space-y-5" onSubmit={handleSubmit(loginHandler, onError)} noValidate>
+                <form className="space-y-5" onSubmit={handleSubmit(loginHandler)} noValidate>
                     <div>
                         <label className="block text-sm font-medium text-gray-700 mb-1">Email</label>
                         <input
@@ -79,8 +67,8 @@ export default function Login() {
                             className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-900"
                             {...register('email')}
                             placeholder="you@example.com"
-                            required
                         />
+                        {errors.email && (<p className="text-red-500 text-sm mt-1">{errors.email.message}</p>)}
                     </div>
 
                     <div>
@@ -91,8 +79,8 @@ export default function Login() {
                             className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-900"
                             {...register('password')}
                             placeholder="••••••••"
-                            required
                         />
+                        {errors.password && (<p className="text-red-500 text-sm mt-1">{errors.password.message}</p>)}
                     </div>
 
                     <button
