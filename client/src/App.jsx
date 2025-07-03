@@ -17,6 +17,7 @@ import AuthGuard from "./components/guards/AuthGuard";
 import GuestGuard from "./components/guards/GuestGuard";
 import AdminGuard from "./components/guards/AdminGuard";
 import ClientGuard from "./components/guards/ClientGuard";
+import { ToastContainer } from "react-toastify";
 
 function App() {
 
@@ -55,6 +56,7 @@ function App() {
             {/* <AdminDashboard /> */}
             {/* <AdminAllAppointments /> */}
             {/* <BlockedTime /> */}
+            <ToastContainer />
         </UserProvider>
     )
 }

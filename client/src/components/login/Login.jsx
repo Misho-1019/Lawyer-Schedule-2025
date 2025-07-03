@@ -1,7 +1,16 @@
 import { useActionState } from "react";
-import { useNavigate } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { useLogin } from "../../api/authApi";
 import { useUserContext } from "../../context/UserContext";
+import { toast } from "react-toastify";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup"
+
+const schema = yup.object({
+    email: yup.string().email('Invalid email format!'),
+    password: yup.string().min(6, 'Password must be at least 6 characters!')
+})
 
 // Login.jsx
 export default function Login() {
@@ -9,14 +18,47 @@ export default function Login() {
     const { login } = useLogin();
     const { userLoginHandler } = useUserContext()
 
-    const loginHandler = async (_, formData) => {
-        const values = Object.fromEntries(formData);
-        const authData = await login(values.email, values.password);
-        userLoginHandler(authData);
-        navigate('/');
+    const {
+        register,
+        handleSubmit,
+        formState: { isSubmitting }
+    } = useForm({
+        resolver: yupResolver(schema)
+    })
+
+    const loginHandler = async (data) => {
+        try {
+            const authData = await login(data.email, data.password)
+
+            userLoginHandler(authData)
+
+            toast.success('Successfull login!', {
+                position: 'top-center',
+                autoClose: 2000,
+                theme: 'dark',
+            })
+
+            navigate('/')
+        } catch (error) {
+            toast.error(error.message || 'Login failed!', {
+                position: 'top-center',
+                autoClose: 2000,
+                theme: 'dark',
+            })
+        }
     };
 
-    const [_, loginAction, isPending] = useActionState(loginHandler, { email: '', password: '' });
+    const onError = (errors) => {
+        const firstError = Object.values(errors)[0]
+
+        if (firstError?.message) {
+            toast.error(firstError.message, {
+                position: 'top-center',
+                autoClose: 2000,
+                theme: 'dark',
+            })
+        }
+    }
 
     return (
         <main className="bg-gradient-to-r from-slate-100 to-slate-200 min-h-screen flex items-center justify-center py-16 px-4">
@@ -28,13 +70,14 @@ export default function Login() {
                     </p>
                 </div>
 
-                <form className="space-y-5" action={loginAction}>
+                <form className="space-y-5" onSubmit={handleSubmit(loginHandler, onError)} noValidate>
                     <div>
                         <label className="block text-sm font-medium text-gray-700 mb-1">Email</label>
                         <input
                             type="email"
                             name="email"
                             className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-900"
+                            {...register('email')}
                             placeholder="you@example.com"
                             required
                         />
@@ -46,6 +89,7 @@ export default function Login() {
                             type="password"
                             name="password"
                             className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-900"
+                            {...register('password')}
                             placeholder="••••••••"
                             required
                         />
@@ -53,18 +97,18 @@ export default function Login() {
 
                     <button
                         type="submit"
-                        disabled={isPending}
+                        disabled={isSubmitting}
                         className="w-full bg-gradient-to-r from-emerald-700 via-emerald-500 to-lime-400 text-white font-semibold py-2 px-4 rounded-xl transition shadow hover:opacity-90 disabled:opacity-70"
                     >
-                        {isPending ? 'Logging in...' : 'Login'}
+                        {isSubmitting ? 'Logging in...' : 'Login'}
                     </button>
                 </form>
 
                 <p className="text-center text-sm text-gray-600">
                     Don’t have an account?{' '}
-                    <a href="/register" className="text-blue-900 font-medium hover:underline">
+                    <Link to="/register" className="text-blue-900 font-medium hover:underline">
                         Register
-                    </a>
+                    </Link>
                 </p>
             </div>
         </main>
