@@ -100,7 +100,7 @@ export default function Login() {
                         disabled={isSubmitting}
                         className="w-full bg-gradient-to-r from-emerald-700 via-emerald-500 to-lime-400 text-white font-semibold py-2 px-4 rounded-xl transition shadow hover:opacity-90 disabled:opacity-70"
                     >
-                        {isSubmitting ? 'Logging in...' : 'Login'}
+                        {isSubmitting ? 'Processing...' : 'Login'}
                     </button>
                 </form>
 
