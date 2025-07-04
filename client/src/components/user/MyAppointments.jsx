@@ -1,5 +1,18 @@
+import { useEffect, useState } from "react";
+import appointmentService from "../../services/appointmentService";
+
 // src/pages/MyAppointments.jsx
 export default function MyAppointments() {
+    const [appointments, setAppointments] = useState([])
+
+    useEffect(() => {
+        appointmentService.getAllClient()
+            .then(setAppointments)
+    }, [])
+
+    console.log(appointments);
+    
+
     return (
         <section className="min-h-screen bg-gradient-to-br from-slate-100 via-indigo-100 to-slate-50 px-4 py-12">
             <div className="max-w-4xl mx-auto bg-white p-10 rounded-2xl shadow-xl border border-slate-200">

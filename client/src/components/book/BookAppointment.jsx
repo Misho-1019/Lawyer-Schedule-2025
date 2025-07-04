@@ -1,4 +1,20 @@
+import { useNavigate } from "react-router";
+import appointmentService from "../../services/appointmentService";
+
 export default function BookAppointment() {
+    const navigate = useNavigate();
+
+    const submitAction = async (formData) => {
+        const appointments = Object.fromEntries(formData)
+
+        await appointmentService.create(appointments)
+
+        console.log(appointments);
+        
+
+        navigate('/user/my-appointments')
+    }
+
     return (
         <section className="min-h-screen bg-gradient-to-br from-[#F8FAFC] via-[#E0E7FF] to-[#F8FAFC] flex items-center justify-center px-4 py-12">
             <div className="bg-white max-w-2xl w-full p-8 rounded-3xl shadow-2xl border border-gray-100">
@@ -6,7 +22,7 @@ export default function BookAppointment() {
                     Book an Appointment
                 </h2>
 
-                <form className="space-y-6">
+                <form className="space-y-6" action={submitAction}>
                     {/* Date Input */}
                     <div>
                         <label className="block mb-2 font-semibold text-[#FACC15]">
