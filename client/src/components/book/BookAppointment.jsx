@@ -5,14 +5,16 @@ export default function BookAppointment() {
     const navigate = useNavigate();
 
     const submitAction = async (formData) => {
-        const appointments = Object.fromEntries(formData)
+        const appointmentData = Object.fromEntries(formData)
 
-        await appointmentService.create(appointments)
+        const result = await appointmentService.create(appointmentData)
 
-        console.log(appointments);
-        
-
-        navigate('/user/my-appointments')
+        navigate('/user/confirmation', {
+            state: {
+                date: result.date,
+                time: result.time,
+            }
+        })
     }
 
     return (

@@ -1,5 +1,18 @@
+import { Link, useLocation } from "react-router";
+
 // src/pages/AppointmentConfirmation.jsx
 export default function AppointmentConfirmation() {
+    const { state } = useLocation()
+
+    const { date, time } = state || {};
+
+    const onDate = new Date(date)
+
+    const formattedDate = onDate.toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+    })
     return (
         <section className="min-h-screen bg-gradient-to-br from-[#F8FAFC] via-[#E0E7FF] to-[#F8FAFC] flex items-center justify-center px-4 py-16">
             <div className="bg-white max-w-md w-full p-8 rounded-3xl shadow-xl text-center border border-gray-100">
@@ -12,16 +25,16 @@ export default function AppointmentConfirmation() {
                 </p>
 
                 <div className="bg-gray-100 p-5 rounded-xl text-sm mb-8 shadow-inner">
-                    <p><strong>Date:</strong> July 15, 2025</p>
-                    <p><strong>Time:</strong> 14:00</p>
+                    <p><strong>Date:</strong> {formattedDate}</p>
+                    <p><strong>Time:</strong> {time}</p>
                 </div>
 
-                <a
-                    href="/my-appointments"
+                <Link
+                    to="/user/my-appointments"
                     className="inline-block bg-gradient-to-r from-blue-700 to-blue-900 text-white px-8 py-3 rounded-xl font-semibold shadow-lg hover:from-blue-600 hover:to-blue-800 transition"
                 >
                     View My Appointments
-                </a>
+                </Link>
             </div>
         </section>
     );
