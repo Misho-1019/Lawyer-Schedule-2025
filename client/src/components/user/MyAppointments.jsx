@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import appointmentService from "../../services/appointmentService";
 import Appointment from "./appointment/Appointment";
+import { Link } from "react-router";
 
 // src/pages/MyAppointments.jsx
 export default function MyAppointments() {
@@ -20,15 +21,20 @@ export default function MyAppointments() {
 
                 {/* Static mock appointments for now */}
                 <div className="space-y-6">
-                    {appointments.map(appointment => <Appointment key={appointment._id} {...appointment}/>)}
+                    {appointments.length > 0
+                        ? appointments.map(appointment => <Appointment key={appointment._id} {...appointment} />)
+                        : <div className="text-center mt-10">
+                            <p className="text-gray-500 text-lg mb-4">You have no appointments yet.</p>
+                            <p className="text-gray-600 text-lg mb-6">Make your appointment now and consult with Victor Todorov at your convenience.</p>
+                            <Link
+                                to="/user/book"
+                                className="w-full bg-gradient-to-r from-emerald-700 via-emerald-500 to-lime-400 text-white font-bold py-3 px-6 rounded-xl transition shadow hover:opacity-90 disabled:opacity-70"
+                            >
+                                Book Appointment
+                            </Link>
+                        </div>
+                    }
                 </div>
-
-                {/* No Appointments Message (uncomment when needed) */}
-                {/*
-                <p className="text-center text-gray-400 mt-10">
-                    You have no appointments yet.
-                </p>
-                */}
             </div>
         </section>
     );
