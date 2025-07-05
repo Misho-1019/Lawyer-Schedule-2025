@@ -31,8 +31,20 @@ export default function AdminAllAppointments() {
                         </thead>
                         <tbody className="divide-y divide-gray-100">
                             {appointments.length > 0
-                            ? (appointments.map(appointment => <Appointment key={appointment._id} {...appointment} />))
-                            : (<></>) 
+                                ? (appointments.map(appointment => <Appointment key={appointment._id} {...appointment} />))
+                                : (
+                                    <tr>
+                                        <td colSpan="6" className="text-center py-10 text-gray-400">
+                                            <div className="flex flex-col items-center justify-center space-y-2">
+                                                <span className="text-4xl">📅</span>
+                                                <p className="text-lg font-medium">No appointments yet</p>
+                                                <p className="text-sm text-gray-500">
+                                                    Once someone books, appointments will appear here.
+                                                </p>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                )
                             }
                         </tbody>
                     </table>
