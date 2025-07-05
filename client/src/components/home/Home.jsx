@@ -1,5 +1,9 @@
+import { Link } from "react-router";
+import useAuth from "../../hooks/useAuth";
+
 // Home.jsx
 export default function Home() {
+    const { role } = useAuth()
     return (
         <main className="bg-slate-50 min-h-screen text-gray-800">
             {/* Hero Section */}
@@ -11,12 +15,21 @@ export default function Home() {
                     <p className="text-lg sm:text-xl mb-10 max-w-2xl mx-auto">
                         Trusted legal advice from a dedicated professional. Book online in minutes with confidence.
                     </p>
-                    <a
-                        href="#"
-                        className="w-full bg-gradient-to-r from-emerald-700 via-emerald-500 to-lime-400 text-white font-bold py-3 px-6 rounded-xl transition shadow hover:opacity-90 disabled:opacity-70"
-                    >
-                        Book an Appointment
-                    </a>
+                    {role === 'admin' ? (
+                        <Link
+                            to="/admin/appointments"
+                            className="w-full bg-gradient-to-r from-emerald-700 via-emerald-500 to-lime-400 text-white font-bold py-3 px-6 rounded-xl transition shadow hover:opacity-90 disabled:opacity-70"
+                        >
+                            See all appointments
+                        </Link>
+                    ) : (
+                        <Link
+                            to="/user/book"
+                            className="w-full bg-gradient-to-r from-emerald-700 via-emerald-500 to-lime-400 text-white font-bold py-3 px-6 rounded-xl transition shadow hover:opacity-90 disabled:opacity-70"
+                        >
+                            Book an Appointment
+                        </Link>
+                    )}
                 </div>
             </section>
 
