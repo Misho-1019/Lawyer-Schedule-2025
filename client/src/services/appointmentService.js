@@ -12,5 +12,12 @@ export default {
     },
     create(appointmentData) {
         return request.post(baseUrl, appointmentData)
+    },
+    async getAllAdmin() {
+        const result = await request.get(`${baseUrl}/admin`)
+
+        const appointments = Object.values(result)
+
+        return appointments
     }
 }
