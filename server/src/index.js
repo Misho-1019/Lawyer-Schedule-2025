@@ -32,13 +32,13 @@ app.use(helmet())
 app.use(express.json())
 app.use(cookieParser())
 
-const globalLimiter = rateLimit({
-    windowMs: 15 * 60 * 1000,
-    max: 200,
-    message: 'Too many requests from this IP, please try again later.',
-})
+// const globalLimiter = rateLimit({
+//     windowMs: 15 * 60 * 1000,
+//     max: 200,
+//     message: 'Too many requests from this IP, please try again later.',
+// })
 
-app.use(globalLimiter)
+// app.use(globalLimiter)
 app.use(authMiddleware)
 
 app.use(router)
