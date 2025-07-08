@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router";
+import { isSameDay, parseISO } from "date-fns";
 import appointmentService from "../../services/appointmentService";
 
 // AdminDashboard.jsx
@@ -14,6 +16,8 @@ export default function AdminDashboard() {
     const pending = appointments.filter(appointment => appointment.status === 'pending')
     const cancelled = appointments.filter(appointment => appointment.status === 'cancelled')
     const completed = appointments.filter(appointment => appointment.status === 'completed')
+
+    const todayAppointments = appointments.filter(appointment => isSameDay(new Date(), parseISO(appointment.date)))
 
     return (
         <div className="min-h-screen bg-gradient-to-br from-slate-100 via-indigo-100 to-slate-50 px-6 py-8">
@@ -51,33 +55,29 @@ export default function AdminDashboard() {
                 <div className="bg-white rounded-2xl shadow-lg p-8">
                     <div className="flex items-center justify-between mb-6">
                         <h2 className="text-xl font-semibold text-blue-900">Today's Appointments</h2>
-                        <a href="#" className="text-sm text-blue-600 hover:underline font-medium">View All</a>
+                        <Link to="/admin/appointments" className="text-sm text-blue-600 hover:underline font-medium">View All</Link>
                     </div>
 
                     <ul className="divide-y divide-gray-200">
-                        {[
-                            { name: 'John Doe', time: '10:00 AM', status: 'Confirmed' },
-                            { name: 'Anna Smith', time: '11:30 AM', status: 'Pending' },
-                            { name: 'David Green', time: '2:00 PM', status: 'Confirmed' }
-                        ].map((appt, i) => (
-                            <li key={i} className="py-4 flex justify-between items-center">
+                        {todayAppointments.map(appointment =>
+                            <li key={appointment._id} className="py-4 flex justify-between items-center">
                                 <div>
-                                    <p className="font-medium text-gray-700">{appt.name}</p>
-                                    <p className="text-sm text-gray-500">{appt.time}</p>
+                                    <p className="font-medium text-gray-700">{appointment.email}</p>
+                                    <p className="text-sm text-gray-500">{appointment.time}</p>
                                 </div>
                                 <span
                                     className={`px-4 py-1 rounded-full text-sm font-semibold
-                  ${appt.status === 'Confirmed'
+                  ${appointment.status === 'Confirmed'
                                             ? 'bg-emerald-100 text-emerald-700'
-                                            : appt.status === 'Pending'
+                                            : appointment.status === 'Pending'
                                                 ? 'bg-yellow-100 text-yellow-700'
                                                 : 'bg-red-100 text-red-700'
                                         }`}
                                 >
-                                    {appt.status}
+                                    {appointment.status}
                                 </span>
                             </li>
-                        ))}
+                        )}
                     </ul>
                 </div>
             </div>
