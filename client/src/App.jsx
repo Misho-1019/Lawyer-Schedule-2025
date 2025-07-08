@@ -18,6 +18,7 @@ import GuestGuard from "./components/guards/GuestGuard";
 import AdminGuard from "./components/guards/AdminGuard";
 import ClientGuard from "./components/guards/ClientGuard";
 import { ToastContainer } from "react-toastify";
+import UpdatePage from "./components/update/UpdatePage";
 
 function App() {
 
@@ -35,6 +36,7 @@ function App() {
                         <Route path='/admin/stats' element={<AdminDashboard />} />
                         <Route path='/admin/appointments' element={<AdminAllAppointments />} />
                         <Route path='/admin/block-time' element={<BlockedTime />} />
+                        <Route path='/admin/update' element={<UpdatePage />} />
                     </Route>
                     <Route element={<ClientGuard />}>
                         <Route path='/user/book' element={<BookAppointment />} />

@@ -1,3 +1,5 @@
+import { Link } from "react-router";
+
 export default function Appointment({
     _id,
     email,
@@ -30,11 +32,12 @@ export default function Appointment({
             </td>
             <td className="px-4 py-3 text-right">
                 <div className="flex justify-end space-x-2">
-                    <button
+                    <Link
+                        to='/admin/update'
                         className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white text-sm px-4 py-1 rounded-lg shadow font-semibold transition"
                     >
-                        Edit
-                    </button>
+                        Update Appointment
+                    </Link>
                     <button
                         className="bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white text-sm px-4 py-1 rounded-lg shadow font-semibold transition"
                     >
