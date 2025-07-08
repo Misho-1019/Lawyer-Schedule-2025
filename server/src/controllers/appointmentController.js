@@ -70,6 +70,23 @@ appointmentController.get('/admin', isAuth, isAdmin, async (req, res) => {
     }
 })
 
+appointmentController.get('/admin/:appointmentId', isAuth, isAdmin, async (req, res) => {
+    const appointmentId = req.params.appointmentId;
+
+    try {
+        const appointment = await appointmentService.getOne(appointmentId)
+
+        if (!appointment) {
+            return res.status(404).json({ message: 'Appointment not found!' })
+        }
+
+        res.status(200).json(appointment)
+    } catch (err) {
+        console.log(err);
+        res.status(404).json({ message: err.message })
+    }
+})
+
 appointmentController.patch('/:appointmentId', isAuth, isAdmin, async (req, res) => {
     const appointmentId = req.params.appointmentId;
     const { date, time, status } = req.body;
