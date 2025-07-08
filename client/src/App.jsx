@@ -36,7 +36,7 @@ function App() {
                         <Route path='/admin/stats' element={<AdminDashboard />} />
                         <Route path='/admin/appointments' element={<AdminAllAppointments />} />
                         <Route path='/admin/block-time' element={<BlockedTime />} />
-                        <Route path='/admin/update' element={<UpdatePage />} />
+                        <Route path='/admin/:appointmentId/update' element={<UpdatePage />} />
                     </Route>
                     <Route element={<ClientGuard />}>
                         <Route path='/user/book' element={<BookAppointment />} />

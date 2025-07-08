@@ -33,7 +33,7 @@ export default function Appointment({
             <td className="px-4 py-3 text-right">
                 <div className="flex justify-end space-x-2">
                     <Link
-                        to='/admin/update'
+                        to={`/admin/${_id}/update`}
                         className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white text-sm px-4 py-1 rounded-lg shadow font-semibold transition"
                     >
                         Update Appointment

@@ -19,5 +19,8 @@ export default {
         const appointments = Object.values(result)
 
         return appointments
-    }
+    },
+    getOneAdmin(appointmentId) {
+        return request.get(`${baseUrl}/admin/${appointmentId}`)
+    },
 }
