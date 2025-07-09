@@ -10,6 +10,11 @@ export default function AdminAllAppointments() {
             .then(setAppointments)
     }, [])
 
+    const handleDelete = async (id) => {
+        await appointmentService.deleteAdmin(id)
+        setAppointments(prev => prev.filter(appointment => appointment._id !== id))
+    }
+
     return (
         <div className="min-h-screen bg-gray-50 px-4 py-6">
             <div className="max-w-7xl mx-auto">
@@ -31,7 +36,7 @@ export default function AdminAllAppointments() {
                         </thead>
                         <tbody className="divide-y divide-gray-100">
                             {appointments.length > 0
-                                ? (appointments.map(appointment => <Appointment key={appointment._id} {...appointment} />))
+                                ? (appointments.map(appointment => <Appointment key={appointment._id} {...appointment} onDelete={handleDelete} />))
                                 : (
                                     <tr>
                                         <td colSpan="6" className="text-center py-10 text-gray-400">

@@ -1,13 +1,17 @@
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
+import useAuth from "../../../hooks/useAuth";
+import appointmentService from "../../../services/appointmentService";
 
 export default function Appointment({
     _id,
     email,
-    username,
     date,
     time,
     status,
+    onDelete,
 }) {
+    const { username } = useAuth()
+
     const onDate = new Date(date)
 
     const formattedDate = onDate.toLocaleDateString('en-US', {
@@ -15,6 +19,14 @@ export default function Appointment({
         month: 'long',
         day: 'numeric'
     })
+
+    const appointmentDeleteCLickHadler = async () => {
+        const hasConfirm = confirm(`Victor, are you sure you want to delete the appointment made by user ${username} with email ${email} on ${formattedDate} at ${time}?`)
+
+        if (!hasConfirm) return;
+
+        await onDelete(_id)
+    }
 
     return (
         <tr className="hover:bg-gray-50 transition">
@@ -39,6 +51,7 @@ export default function Appointment({
                         Update Appointment
                     </Link>
                     <button
+                        onClick={appointmentDeleteCLickHadler}
                         className="bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white text-sm px-4 py-1 rounded-lg shadow font-semibold transition"
                     >
                         Delete

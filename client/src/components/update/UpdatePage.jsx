@@ -10,13 +10,9 @@ export default function UpdatePage() {
         appointmentService.getOneAdmin(appointmentId)
             .then(setAppointment)
     }, [appointmentId])
-
-    console.log(appointment);
     
     const formattedDate = appointment.date ? new Date(appointment.date).toISOString().split('T')[0] : '';
-    
-    console.log(formattedDate);
-    
+        
     return (
         <section className="min-h-screen bg-gradient-to-br from-slate-100 via-indigo-100 to-slate-50 flex items-center justify-center px-4 py-12">
             <div className="bg-white max-w-xl w-full p-8 rounded-3xl shadow-2xl border border-gray-100">

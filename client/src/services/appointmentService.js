@@ -23,4 +23,7 @@ export default {
     getOneAdmin(appointmentId) {
         return request.get(`${baseUrl}/admin/${appointmentId}`)
     },
+    deleteAdmin(appointmentId) {
+        return request.delete(`${baseUrl}/${appointmentId}`)
+    },
 }
