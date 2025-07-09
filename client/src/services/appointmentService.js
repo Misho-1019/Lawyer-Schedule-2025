@@ -26,4 +26,7 @@ export default {
     deleteAdmin(appointmentId) {
         return request.delete(`${baseUrl}/${appointmentId}`)
     },
+    edit(appointmentId, appointmentData) {
+        return request.patch(`${baseUrl}/${appointmentId}`, appointmentData)
+    }
 }
