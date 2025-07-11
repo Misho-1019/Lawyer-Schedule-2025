@@ -28,5 +28,8 @@ export default {
     },
     edit(appointmentId, appointmentData) {
         return request.patch(`${baseUrl}/${appointmentId}`, appointmentData)
+    },
+    cancelClient(appointmentId, appointmentData) {
+        return request.patch(`${baseUrl}/${appointmentId}/cancel`, appointmentData)
     }
 }

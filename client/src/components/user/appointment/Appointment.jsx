@@ -1,4 +1,10 @@
-export default function Appointment({_id, date, time, status}) {
+import { useState } from "react"
+import appointmentService from "../../../services/appointmentService"
+
+export default function Appointment({ _id, date, time, status }) {
+    const [currentStatus, setCurrentStatus] = useState(status)
+    const [loading, setLoading] = useState(false)
+
     const onDate = new Date(date)
 
     const formattedDate = onDate.toLocaleDateString('en-US', {
@@ -6,6 +12,18 @@ export default function Appointment({_id, date, time, status}) {
         month: 'long',
         day: 'numeric',
     })
+
+    const handleCancel = async () => {
+        const hasConfirm = confirm(`Are you sure you want to cancel your appointment on ${formattedDate} at ${time}?`)
+
+        if (!hasConfirm) return;
+
+        setLoading(true)
+        await appointmentService.cancelClient(_id, { status: 'cancelled' })
+        setCurrentStatus('cancelled')
+
+        setLoading(false)
+    }
 
     return (
         <div
@@ -16,15 +34,19 @@ export default function Appointment({_id, date, time, status}) {
                     📅 {formattedDate} at {time}
                 </p>
                 <p className="text-sm text-gray-600">
-                    Status: <span className="text-emerald-600 font-medium">{status}</span>
+                    Status: <span className="text-emerald-600 font-medium">{currentStatus}</span>
                 </p>
             </div>
 
-            <button
-                className="bg-gradient-to-r from-red-600 via-red-500 to-red-400 hover:from-red-700 hover:via-red-600 hover:to-red-500 text-white px-5 py-2 rounded-lg text-sm font-semibold transition shadow"
-            >
-                Cancel
-            </button>
+            {currentStatus !== 'cancelled' && (
+                <button
+                onClick={handleCancel}
+                disabled={loading}
+                    className="bg-gradient-to-r from-red-600 via-red-500 to-red-400 hover:from-red-700 hover:via-red-600 hover:to-red-500 text-white px-5 py-2 rounded-lg text-sm font-semibold transition shadow"
+                >
+                    {loading ? 'Cancelling...' : 'Cancel'}
+                </button>
+            )}
         </div>
     )
 }
